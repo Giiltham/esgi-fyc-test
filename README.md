@@ -9,7 +9,7 @@ Projet en microservice, où l'on construit une application avec un front, un bac
 * Backend : Django + linter ruff + une vue qui renvoi l'heure
 * Nginx : Routage aux autres services + Authentification
 
-chacun des services a un Dockerfile et un fichier de deploiement kubernetes, pour fonctionner sous tilt et docker-compose 
+chacun des services a un Dockerfile, un Tiltfile et un fichier de deploiement kubernetes, pour fonctionner sous tilt et docker-compose 
 
 ## Lancer le projet
 
