@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: fyc-frontend
+spec:
+ replicas: 1
+ selector:
+   matchLabels:
+     app: fyc-frontend
+ template:
+   metadata:
+     labels:
+       app: fyc-frontend
+   spec:
+     containers:
+     - name: fyc-frontend
+       image: fyc-frontend
+       env:
+         - name: VITE_APP_NGINX_URL
+           value: http://172.20.0.2:30080
+       ports:
+       - containerPort: 80
+       resources:
+        requests:
+         memory: "256Mi"
+         cpu: "250m"
+        limits:
+         memory: "512Mi"
+         cpu: "500m"

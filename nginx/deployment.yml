@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fyc-nginx
+  labels:
+    app: fyc-nginx
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30080
+  selector:
+    app: fyc-nginx
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: fyc-nginx
+spec:
+ replicas: 1
+ selector:
+   matchLabels:
+     app: fyc-nginx
+ template:
+   metadata:
+     labels:
+       app: fyc-nginx
+   spec:
+     containers:
+     - name: fyc-nginx
+       image: fyc-nginx
+       ports:
+       - containerPort: 80
+       resources:
+        requests:
+         memory: "256Mi"
+         cpu: "250m"
+        limits:
+         memory: "512Mi"
+         cpu: "500m"

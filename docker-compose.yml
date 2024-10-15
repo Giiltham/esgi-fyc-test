@@ -1,0 +1,42 @@
+services:
+  backend:
+    container_name: fyc-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+      - /app/.venv # Utilisation d'un volume anonyme pour exclude .venv du bind mount, bien down + up build entre chaque ajout de dependences
+    ports:
+      - 8000:8000
+
+  auth:
+    container_name: fyc-auth
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    volumes:
+      - ./auth:/app
+      - /app/node_modules # Utilisation d'un volume anonyme pour exclude .venv du bind mount, bien down + up build entre chaque ajout de dependences
+    ports:
+      - 8001:3000
+
+  nginx:
+    container_name: fyc-nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - 8002:80
+
+  frontend:
+    container_name: fyc-frontend
+    build:
+      context: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_APP_NGINX_URL=http://localhost:8002
+    ports:
+      - 8080:5173
